@@ -255,6 +255,7 @@ try:
             logger('\tEpoch {} Test set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)'.format(
                 epoch, test_loss, correct, len(test_loader.dataset), acc))
             accuracy = acc.cpu().data.numpy()
+            test_loss = test_loss.cpu().data.numpy()
             np.savetxt(out, [[epoch, test_loss, accuracy]], delimiter=",",fmt='%f')
             
             if acc > best_acc:
