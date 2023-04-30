@@ -21,7 +21,7 @@ parser = argparse.ArgumentParser(description='PyTorch CIFAR-X Example')
 parser.add_argument('--type', default='cifar10', help='dataset for training')
 parser.add_argument('--batch_size', type=int, default=500, help='input batch size for training (default: 64)')
 parser.add_argument('--epochs', type=int, default=257, help='number of epochs to train (default: 10)')
-parser.add_argument('--grad_scale', type=float, default=1, help='learning rate for wage delta calculation')
+parser.add_argument('--grad_scale', type=float, default=0.5, help='learning rate for wage delta calculation')
 parser.add_argument('--seed', type=int, default=117, help='random seed (default: 1)')
 parser.add_argument('--log_interval', type=int, default=100,  help='how many batches to wait before logging training status')
 parser.add_argument('--test_interval', type=int, default=1,  help='how many epochs to wait before another test')
@@ -110,7 +110,7 @@ model = model.cifar10(args = args, logger=logger)
 if args.cuda:
     model.cuda()
 
-optimizer = optim.SGD(model.parameters(), lr=1)
+optimizer = optim.SGD(model.parameters(), lr=0.1)
 
 decreasing_lr = list(map(int, args.decreasing_lr.split(',')))
 logger('decreasing_lr: ' + str(decreasing_lr))
