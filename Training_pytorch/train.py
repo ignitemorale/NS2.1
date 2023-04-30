@@ -56,8 +56,8 @@ args.cellBit = 5              # cell precision (in V2.0, we only support one-cel
 args.max_level = 32           # Maximum number of conductance states during weight update (floor(log2(max_level))=cellBit) 
 args.c2cVari = 0.003          # cycle-to-cycle variation
 args.d2dVari = 0.0            # device-to-device variation
-args.nonlinearityLTP = 1.75   # nonlinearity in LTP
-args.nonlinearityLTD = 1.46   # nonlinearity in LTD (negative if LTP and LTD are asymmetric)
+args.nonlinearityLTP = 1.62   # nonlinearity in LTP
+args.nonlinearityLTD = -4.25   # nonlinearity in LTD (negative if LTP and LTD are asymmetric)
 
 # momentum
 gamma = 0.9
