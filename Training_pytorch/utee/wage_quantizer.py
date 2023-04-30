@@ -69,6 +69,8 @@ def QG(origin, bits_W, x, bits_G, lr, paramALTP, paramALTD, maxLevelLTP, maxLeve
     paramA = torch.where(torch.sign(deltaPulse)<0, paramALTP, paramALTD).float()
     paramB = torch.where(torch.sign(deltaPulse)<0, paramBLTP, paramBLTD).float()
     xPulse = InvNonlinearWeight(origin, paramA, paramB)
+    xPulse = np.nan_to_num(xPulse.cpu().data.numpy(), nan=60.0)
+    xPulse = torch.Tensor(xPulse).cuda()
     xNew = NonlinearWeight(xPulse-deltaPulse, paramA, paramB)
     gradient = origin - C(xNew,bits_W)
     norm = SR(gradient)  # normalize the gradient
