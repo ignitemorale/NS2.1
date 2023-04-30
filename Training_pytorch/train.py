@@ -16,7 +16,7 @@ import numpy as np
 import csv
 from subprocess import call
 from modules.quantization_cpu_np_infer import QConv2d,QLinear
-
+ 
 parser = argparse.ArgumentParser(description='PyTorch CIFAR-X Example')
 parser.add_argument('--type', default='cifar10', help='dataset for training')
 parser.add_argument('--batch_size', type=int, default=200, help='input batch size for training (default: 64)')
