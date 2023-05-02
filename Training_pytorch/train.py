@@ -19,8 +19,8 @@ from modules.quantization_cpu_np_infer import QConv2d,QLinear
 
 parser = argparse.ArgumentParser(description='PyTorch CIFAR-X Example')
 parser.add_argument('--type', default='cifar10', help='dataset for training')
-parser.add_argument('--batch_size', type=int, default=500, help='input batch size for training (default: 64)')
-parser.add_argument('--epochs', type=int, default=257, help='number of epochs to train (default: 10)')
+parser.add_argument('--batch_size', type=int, default=250, help='input batch size for training (default: 64)')
+parser.add_argument('--epochs', type=int, default=256, help='number of epochs to train (default: 10)')
 parser.add_argument('--grad_scale', type=float, default=1, help='learning rate for wage delta calculation')
 parser.add_argument('--seed', type=int, default=117, help='random seed (default: 1)')
 parser.add_argument('--log_interval', type=int, default=100,  help='how many batches to wait before logging training status')
@@ -49,12 +49,13 @@ parser.add_argument('--c2cVari', default=0)
 current_time = datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
 
 args = parser.parse_args()
+args.decreasing_lr = '50,100,150,200'
 args.onoffratio = 28.3        # onoffratio
 args.wl_weight = 5            # weight precision
 args.wl_grad = 5              # gradient precision
 args.cellBit = 5              # cell precision (in V2.0, we only support one-cell-per-synapse, i.e. cellBit==wl_weight==wl_grad)
 args.max_level = 32           # Maximum number of conductance states during weight update (floor(log2(max_level))=cellBit) 
-args.c2cVari = 0.003          # cycle-to-cycle variation
+args.c2cVari = 0.00          # cycle-to-cycle variation
 args.d2dVari = 0.0            # device-to-device variation
 args.nonlinearityLTP = 1.62   # nonlinearity in LTP
 args.nonlinearityLTD = -4.25   # nonlinearity in LTD (negative if LTP and LTD are asymmetric)
@@ -143,7 +144,7 @@ try:
             i=i+1
         
         if epoch in decreasing_lr:
-             grad_scale = grad_scale / 8.0
+             grad_scale = grad_scale / 2.0
 
         logger("training phase")
         for batch_idx, (data, target) in enumerate(train_loader):
