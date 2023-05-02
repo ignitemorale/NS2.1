@@ -63,16 +63,6 @@ args.nonlinearityLTD = -4.25   # nonlinearity in LTD (negative if LTP and LTD ar
 gamma = 0.9
 alpha = 0.1
 
-class weightclipper(object):
-    def __call__(self, module, param):
-        if hasattr(module, param):
-            self.clip(module, param)
-
-    def clip(self, module, param):
-        p = getattr(module, param).data
-        p = p.clamp(-1,1)
-        getattr(module, param).data = p
-
 NeuroSim_Out = np.array([["L_forward (s)", "L_activation gradient (s)", "L_weight gradient (s)", "L_weight update (s)", 
                           "E_forward (J)", "E_activation gradient (J)", "E_weight gradient (J)", "E_weight update (J)",
                           "L_forward_Peak (s)", "L_activation gradient_Peak (s)", "L_weight gradient_Peak (s)", "L_weight update_Peak (s)", 
@@ -118,8 +108,6 @@ train_loader, test_loader = dataset.get10(batch_size=args.batch_size, num_worker
 model = model.cifar10(args = args, logger=logger)
 if args.cuda:
     model.cuda()
-
-weightclip = weightclipper()
 
 optimizer = optim.SGD(model.parameters(), lr=0.1)
 
@@ -172,16 +160,14 @@ try:
             # model.apply(weightclip)
             j=0
             for name, param in list(model.named_parameters())[::-1]:
-                weightclip(param.data)
+                param.data = torch.clip(param.data, -1, 1)
                 velocity[j] = gamma * velocity[j] + alpha * param.grad.data
                 param.grad.data = velocity[j]
                 param.grad.data = wage_quantizer.QG(param.data,args.wl_weight,param.grad.data,args.wl_grad,grad_scale,
                             torch.from_numpy(paramALTP[j]).cuda(), torch.from_numpy(paramALTD[j]).cuda(), args.max_level, args.max_level)
                 j=j+1
 
-           # print(param.data)
             optimizer.step()
-            # print(param.data)
 
             for name, param in list(model.named_parameters())[::-1]:
                 param.data = wage_quantizer.W(param.data,param.grad.data,args.wl_weight,args.c2cVari)
