@@ -19,7 +19,7 @@ from modules.quantization_cpu_np_infer import QConv2d,QLinear
 
 parser = argparse.ArgumentParser(description='PyTorch CIFAR-X Example')
 parser.add_argument('--type', default='cifar10', help='dataset for training')
-parser.add_argument('--batch_size', type=int, default=250, help='input batch size for training (default: 64)')
+parser.add_argument('--batch_size', type=int, default=200, help='input batch size for training (default: 64)')
 parser.add_argument('--epochs', type=int, default=256, help='number of epochs to train (default: 10)')
 parser.add_argument('--grad_scale', type=float, default=1, help='learning rate for wage delta calculation')
 parser.add_argument('--seed', type=int, default=117, help='random seed (default: 1)')
@@ -49,7 +49,7 @@ parser.add_argument('--c2cVari', default=0)
 current_time = datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
 
 args = parser.parse_args()
-args.decreasing_lr = '50,100,150,200'
+args.decreasing_lr = '25,50,75,100,125,150,200'
 args.onoffratio = 28.3        # onoffratio
 args.wl_weight = 5            # weight precision
 args.wl_grad = 5              # gradient precision
@@ -110,7 +110,7 @@ model = model.cifar10(args = args, logger=logger)
 if args.cuda:
     model.cuda()
 
-optimizer = optim.SGD(model.parameters(), lr=0.1)
+optimizer = optim.SGD(model.parameters(), lr=0.2)
 
 decreasing_lr = list(map(int, args.decreasing_lr.split(',')))
 logger('decreasing_lr: ' + str(decreasing_lr))
