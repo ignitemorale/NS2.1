@@ -166,14 +166,13 @@ try:
             optimizer.zero_grad()
             output = model(data)
             loss = wage_util.SSE(output,target)
-
-            param.grad.data = torch.clip(param.grad.data, -1, 1)
             
             loss.backward()
             # introduce non-ideal property
             # model.apply(weightclip)
             j=0
             for name, param in list(model.named_parameters())[::-1]:
+                weightclip(pram.data)
                 velocity[j] = gamma * velocity[j] + alpha * param.grad.data
                 param.grad.data = velocity[j]
                 param.grad.data = wage_quantizer.QG(param.data,args.wl_weight,param.grad.data,args.wl_grad,grad_scale,
