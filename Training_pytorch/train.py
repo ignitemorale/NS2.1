@@ -167,6 +167,8 @@ try:
             output = model(data)
             loss = wage_util.SSE(output,target)
 
+            param.grad.data = torch.clip(param.grad.data, -1, 1)
+            
             loss.backward()
             # introduce non-ideal property
             # model.apply(weightclip)
