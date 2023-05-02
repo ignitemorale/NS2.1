@@ -110,7 +110,7 @@ model = model.cifar10(args = args, logger=logger)
 if args.cuda:
     model.cuda()
 
-optimizer = optim.SGD(model.parameters(), lr=0.2)
+optimizer = optim.SGD(model.parameters(), lr=0.1)
 
 decreasing_lr = list(map(int, args.decreasing_lr.split(',')))
 logger('decreasing_lr: ' + str(decreasing_lr))
