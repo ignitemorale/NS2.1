@@ -79,8 +79,6 @@ def NonlinearWeight(xPulse, A, B):
     return B*(1-torch.exp(-xPulse/A))-1
 
 def InvNonlinearWeight(weight, A, B):
-    LRL = nn.LeakyReLU(0.5)
-    weight = LRL(weight)
     return -A*torch.log(1 - (weight+1)/B)
 
 def GetParamA(NL):
