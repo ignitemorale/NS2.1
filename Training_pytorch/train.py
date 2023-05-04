@@ -2,6 +2,7 @@ import argparse
 import os
 import time
 from utee import misc
+from utee import plots
 import torch
 import torch.optim as optim
 from torch.autograd import Variable
@@ -274,3 +275,4 @@ except Exception as e:
     traceback.print_exc()
 finally:
     logger("Total Elapse: {:.2f}, Best Result: {:.3f}%".format(time.time()-t_begin, best_acc))
+    mpt = plots.plotting('PythonWrapper_Output', args.nonlinearityLTP, args.nonlinearityLTD)
