@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 
-def plots(data, LTP, LTD):
+def plotting(data, LTP, LTD):
 
     df = pd.read_csv(data + '.csv')
 
