@@ -3,7 +3,7 @@ import pandas as pd
 
 def plotting(data, LTP, LTD):
 
-    df = pd.read_csv(data + '.csv')
+    df = pd.read_csv(data)
 
     x = df.iloc[:, 0]
     y = df.iloc[:, 2]
@@ -20,5 +20,5 @@ def plotting(data, LTP, LTD):
 data = str(input('Input data name: '))
 LTPn = str(input('Input LTP: '))
 LTDn = str(input('Input LTD: '))
-plots(data, LTPn, LTDn)
+plots(data + 'csv', LTPn, LTDn)
 '''
