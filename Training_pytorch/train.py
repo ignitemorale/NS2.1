@@ -275,4 +275,4 @@ except Exception as e:
     traceback.print_exc()
 finally:
     logger("Total Elapse: {:.2f}, Best Result: {:.3f}%".format(time.time()-t_begin, best_acc))
-    mpt = plots.plotting('PythonWrapper_Output', args.nonlinearityLTP, args.nonlinearityLTD)
+    mpt = plots.plotting(out, args.nonlinearityLTP, args.nonlinearityLTD)
