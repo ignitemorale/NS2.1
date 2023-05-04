@@ -20,5 +20,5 @@ def plotting(data, LTP, LTD):
 data = str(input('Input data name: '))
 LTPn = str(input('Input LTP: '))
 LTDn = str(input('Input LTD: '))
-plots(data + 'csv', LTPn, LTDn)
+plots(data, LTPn, LTDn)
 '''
